@@ -1,5 +1,5 @@
 
-const version = `v8`;
+const version = `v9`;
 
 
 self.addEventListener('install', (event) => {
@@ -7,9 +7,9 @@ self.addEventListener('install', (event) => {
         caches.open(version)
         .then((cache) => {
             return cache.addAll([
-                './css/offline.css',
-                './offline.html',
-                './assets/offline.jpg',
+                '/css/offline.css',
+                '/offline.html',
+                '/assets/offline.jpg',
             ]);
         })
     )
@@ -59,12 +59,8 @@ const fetchAndUpdate = (request) => {
     .then((response) => {
         if (response) {
             return caches.open(version)
-            .then((cache) => {
-                return cache.put(request, response.clone())
-                        .then(() => {
-                            return response;
-                        });
-            })
+            .then((cache) => cache.put(request, response.clone())
+            .then(() => response))
         } else {
             // todo: handle gracefully
         }
